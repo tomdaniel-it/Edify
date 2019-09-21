@@ -19,12 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $username = $data['username'];
   $password = $data['password'];
 
-  $hashedPassword = hashPassword($password);
-
   $user = getUser();
 
-  if ($user->username === $username && $user->hashedPassword === $hashedPassword) {
+  if ($user !== NULL && $user->username === $username && verifyPassword($password, $user->hashedPassword)) {
     authenticate();
+    setJsonOutputData((object) ["username" => $username]);
   } else {
     showErrorAndExit(401, 'Username or password is incorrect.');
   }
