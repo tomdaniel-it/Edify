@@ -15,6 +15,8 @@ function addUser($username, $hashedPassword) {
 function getUser() {
   $users = readFileContent('user');
 
+  if (count($users) === 0) return NULL;
+
   // Only one user should exist (for now)
   return $users[0];
 }
