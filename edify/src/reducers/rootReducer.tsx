@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import accountReducer from './accountReducer';
 
 const rootReducer = combineReducers({
-  accountReducer,
+  account: accountReducer,
 });
 
 export default rootReducer;

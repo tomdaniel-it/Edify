@@ -25,7 +25,8 @@
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
         "import/prefer-default-export": "off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "max-len": [2, 120, 4]
     },
     "settings": {
         "import/resolver": {
