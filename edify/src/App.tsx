@@ -8,7 +8,7 @@ import { Root } from './components/Root';
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const App: React.FC = () => (
-  <Root store={store} />
+  <Root store={store} />  
 );
 
 export default App;
