@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/tomdaniel-it/ToBeDecided#readme",
   "devDependencies": {
-    "eslint": "^6.1.0"
+    "eslint": "^6.4.0"
   }
 }
