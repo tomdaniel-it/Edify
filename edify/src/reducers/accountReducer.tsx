@@ -2,7 +2,7 @@ import {
   LOGIN, AccountActions, LOGIN_SUCCESS, LOGIN_FAILURE, CREATE_ACCOUNT, CREATE_ACCOUNT_SUCCESS, CREATE_ACCOUNT_FAILURE,
 } from '../actions/accountActionTypes';
 
-interface AccountState {
+export interface AccountState {
   loading: boolean,
   error: string|null,
   username: string|null,

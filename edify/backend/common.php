@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . DIRECTORY_SEPARATOR . 'config.php');
+
 function isValidJSON($str) {
     json_decode($str);
     return json_last_error() == JSON_ERROR_NONE;
@@ -7,6 +9,16 @@ function isValidJSON($str) {
 
 function setContentTypeJson() {
     header('Content-Type: application/json');
+}
+
+function setCors() {
+  global $ENV;
+
+  if ($ENV === 'development') {
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD, OPTIONS');
+    header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+  }
 }
 
 function getJsonData() {
