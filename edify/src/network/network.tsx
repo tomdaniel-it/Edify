@@ -14,9 +14,11 @@ const request = async (endpoint: string, method: Method, data?: any) => {
     })).data;
   } catch (error) {
     if (!error.response || !error.response.data || !error.response.data.error) {
+      // eslint-disable-next-line no-console
       console.trace(error);
       throw new Error('An unknown error occured.');
     } else {
+      // eslint-disable-next-line no-console
       console.trace(error.response.data.error);
       throw new Error(error.response.data.error);
     }
