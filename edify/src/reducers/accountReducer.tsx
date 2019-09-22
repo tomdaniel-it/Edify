@@ -1,5 +1,14 @@
 import {
-  LOGIN, AccountActions, LOGIN_SUCCESS, LOGIN_FAILURE, CREATE_ACCOUNT, CREATE_ACCOUNT_SUCCESS, CREATE_ACCOUNT_FAILURE,
+  AccountActions,
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  CREATE_ACCOUNT,
+  CREATE_ACCOUNT_SUCCESS,
+  CREATE_ACCOUNT_FAILURE,
+  LOGOUT,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
 } from '../actions/accountActionTypes';
 
 export interface AccountState {
@@ -29,6 +38,23 @@ const accountReducer = (state = initialState, action: AccountActions): AccountSt
         loading: false,
       };
     case LOGIN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case LOGOUT_FAILURE:
       return {
         ...state,
         loading: false,

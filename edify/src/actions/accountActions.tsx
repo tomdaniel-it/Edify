@@ -2,7 +2,15 @@ import { Dispatch } from 'react';
 
 import { Account } from '../types/types';
 import {
-  LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE, CREATE_ACCOUNT, CREATE_ACCOUNT_SUCCESS, CREATE_ACCOUNT_FAILURE,
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  CREATE_ACCOUNT,
+  CREATE_ACCOUNT_SUCCESS,
+  CREATE_ACCOUNT_FAILURE,
+  LOGOUT,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
 } from './accountActionTypes';
 import * as network from '../network/network';
 
@@ -24,8 +32,30 @@ export const login = (username: string, password: string) => async (dispatch: Di
   try {
     const result: Account = await network.post('auth/login.php', { username, password });
     dispatch(loginSuccess(result));
-  } catch (e) {
-    dispatch(loginFailure('Username or password is incorrect.'));
+  } catch (error) {
+    dispatch(loginFailure(error.message));
+  }
+};
+
+const logoutSuccess = () => ({
+  type: LOGOUT_SUCCESS,
+});
+
+const logoutFailure = (error: string) => ({
+  type: LOGOUT_FAILURE,
+  payload: error,
+});
+
+export const logout = () => async (dispatch: Dispatch<any>) => {
+  dispatch({
+    type: LOGOUT,
+  });
+
+  try {
+    await network.get('auth/logout.php');
+    dispatch(logoutSuccess());
+  } catch (error) {
+    dispatch(logoutFailure(error.message));
   }
 };
 
