@@ -27,7 +27,12 @@ const InstallationScreen = () => {
       <form>
         <div>
           <label htmlFor="username">Username:</label>
-          <input onChange={(e) => setUsername(e.target.value)} type="text" id="username" placeholder="Username" />
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            type="text"
+            id="username"
+            placeholder="Username"
+          />
         </div>
         <div>
           <label htmlFor="password">Password:</label>

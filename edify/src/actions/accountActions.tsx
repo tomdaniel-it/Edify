@@ -68,15 +68,16 @@ const createAccountFailure = (error: string) => ({
   payload: error,
 });
 
-export const createAccount = (username: string, password: string) => async (dispatch: Dispatch<any>) => {
-  dispatch({
-    type: CREATE_ACCOUNT,
-  });
+export const createAccount
+  = (username: string, password: string) => async (dispatch: Dispatch<any>) => {
+    dispatch({
+      type: CREATE_ACCOUNT,
+    });
 
-  try {
-    await network.post('auth/init.php', { username, password });
-    dispatch(createAccountSuccess());
-  } catch (e) {
-    dispatch(createAccountFailure(e.message));
-  }
-};
+    try {
+      await network.post('auth/init.php', { username, password });
+      dispatch(createAccountSuccess());
+    } catch (e) {
+      dispatch(createAccountFailure(e.message));
+    }
+  };

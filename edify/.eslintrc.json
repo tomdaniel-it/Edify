@@ -26,13 +26,14 @@
         "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
         "import/prefer-default-export": "off",
         "no-unused-vars": "off",
-        "max-len": [2, 120, 4],
+        "max-len": [2, 100, 4],
         "operator-linebreak": "off",
         "jsx-a11y/label-has-associated-control": [2, {
           "required": {
             "some": [ "nesting", "id" ]
           }
-        }]
+        }],
+        "implicit-arrow-linebreak": "off"
     },
     "settings": {
         "import/resolver": {

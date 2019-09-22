@@ -22,7 +22,9 @@ export const fetchInstallationStatus = () => async (dispatch: Dispatch<any>) => 
   });
 
   try {
-    dispatch(fetchInstallationStatusSuccess((await network.get('installation/status.php')).installed));
+    dispatch(
+      fetchInstallationStatusSuccess((await network.get('installation/status.php')).installed),
+    );
   } catch (e) {
     dispatch(fetchInstallationStatusFailure(e.message));
   }
