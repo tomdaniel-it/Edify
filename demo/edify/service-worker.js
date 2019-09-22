@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/edify/precache-manifest.4acf4acf09d238ed6e9275c5fcf34f79.js"
+  "/edify/precache-manifest.42b70cd11f47aef55ff37c2114fbcd07.js"
 );
 
 self.addEventListener('message', (event) => {
