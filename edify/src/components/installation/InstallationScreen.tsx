@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { createAccount } from '../../actions/accountActions';
 import { getError } from '../../selectors/installationSelectors';
-import './Installation.css';
+import './InstallationScreen.css';
 import { fetchInstallationStatus } from '../../actions/installationActions';
 
-export const Installation = () => {
+const InstallationScreen = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -39,3 +39,5 @@ export const Installation = () => {
     </div>
   );
 };
+
+export default InstallationScreen;
