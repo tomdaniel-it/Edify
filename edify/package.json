@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/tomdaniel-it/Edify/issues"
   },
-  "homepage": "https://github.com/tomdaniel-it/Edify#readme",
+  "homepage": "/edify/",
   "dependencies": {
     "@types/jest": "24.0.18",
     "@types/node": "12.7.5",
@@ -30,7 +30,9 @@
   "scripts": {
     "start": "react-scripts start",
     "start:backend": "php -S 0.0.0.0:8000",
+    "start:demo": "cd ../demo/ && php -S 0.0.0.0:8000",
     "build": "react-scripts build",
+    "build:demo": "npm run build && rm -rf ../demo/edify/* && cp -a build/. ../demo/edify/ && cp backend/ ../demo/edify/backend/ -r",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .tsx"

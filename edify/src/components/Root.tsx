@@ -8,7 +8,6 @@ import LoginScreen from './login/LoginScreen';
 import { getAuthenticated } from '../selectors/accountSelectors';
 
 const RootContent = () => {
-  return <EditorScreen />;
   const installed = useSelector(getInstalled);
   const isInstallationCheckLoading = useSelector(getLoading);
   const isAuthenticated = useSelector(getAuthenticated);
