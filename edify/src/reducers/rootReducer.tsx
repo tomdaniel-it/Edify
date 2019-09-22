@@ -1,8 +1,15 @@
 import { combineReducers } from 'redux';
-import accountReducer from './accountReducer';
+import accountReducer, { AccountState } from './accountReducer';
+import installationReducer, { InstallationState } from './installationReducer';
+
+export interface ApplicationState {
+  account: AccountState,
+  installation: InstallationState,
+}
 
 const rootReducer = combineReducers({
-  accountReducer,
+  account: accountReducer,
+  installation: installationReducer,
 });
 
 export default rootReducer;

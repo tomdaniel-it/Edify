@@ -1,12 +1,20 @@
 import {
-  LOGIN, AccountActions, LOGIN_SUCCESS, LOGIN_FAILURE,
+  LOGIN, AccountActions, LOGIN_SUCCESS, LOGIN_FAILURE, CREATE_ACCOUNT, CREATE_ACCOUNT_SUCCESS, CREATE_ACCOUNT_FAILURE,
 } from '../actions/accountActionTypes';
 
-const initialState = {
+export interface AccountState {
+  loading: boolean,
+  error: string|null,
+  username: string|null,
+}
+
+const initialState: AccountState = {
   loading: false,
+  error: null,
+  username: null,
 };
 
-const accountReducer = (state = initialState, action: AccountActions) => {
+const accountReducer = (state = initialState, action: AccountActions): AccountState => {
   switch (action.type) {
     case LOGIN:
       return {
@@ -16,11 +24,29 @@ const accountReducer = (state = initialState, action: AccountActions) => {
       };
     case LOGIN_SUCCESS:
       return {
+        ...state,
+        ...action.payload,
         loading: false,
-        username: action.payload,
       };
     case LOGIN_FAILURE:
       return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CREATE_ACCOUNT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CREATE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case CREATE_ACCOUNT_FAILURE:
+      return {
+        ...state,
         loading: false,
         error: action.payload,
       };

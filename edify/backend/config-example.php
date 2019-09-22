@@ -1,5 +1,6 @@
 <?php
 
-$DB_TYPE = 'json';
+$DB_TYPE = 'json'; // json
+$ENV = 'development'; // development or production
 
 ?>
