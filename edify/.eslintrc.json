@@ -33,7 +33,12 @@
             "some": [ "nesting", "id" ]
           }
         }],
-        "implicit-arrow-linebreak": "off"
+        "implicit-arrow-linebreak": "off",
+        "no-plusplus": "off",
+        "no-continue": "off",
+        "lines-between-class-members": "off",
+        "class-methods-use-this": "off" ,
+        "no-param-reassign": ["error", { "props": false }]
     },
     "settings": {
         "import/resolver": {
