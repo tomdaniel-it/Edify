@@ -82,4 +82,44 @@ function showErrorAndExit($code, $error = "") {
     exit();
 }
 
+function joinPath(...$pathElements) {
+  $elements = [];
+  foreach ($pathElements as $index => $pathElement) {
+    if (strlen(trim($pathElement)) === 0 || (trim($pathElement)[0] === '/' && strlen(trim($pathElement)) === 1)) continue;
+    if ($pathElement[0] === '/' && $index > 0) $pathElement = substr($pathElement, 1);
+    if ($pathElement[strlen($pathElement) -1] === '/') $pathElement = substr($pathElement, 0, -1);
+    array_push($elements, $pathElement);
+  }
+  return join(DIRECTORY_SEPARATOR, $elements);
+}
+
+function getFileLocationFromUrl($url) {
+  // (http)(://)(www.thisisatest.co.uk(:80))(/subdir/subdir/(subdir/))(test.html?var=x#anchor)
+  // Subdir: Group 5 (/subdir/subdir/subdir/)
+  // Filename: Group 7 (test.html?var=x#anchor)
+  if (preg_match('/^((https|http):\/\/)?[\w\-\.]+(:[0-9]+)?((\/([\w\-]+\/)+|\/)(.*))?$/', $url, $matches)) {
+    $subdir = $matches[5];
+    $filenameWithExtras = $matches[7];
+    if (trim($filenameWithExtras) === '') {
+      // url = 'something.com/subdir/'
+      $filename = joinPath(dirname(__DIR__, 2), $subdir, 'index.html');
+      return $filename;
+    } 
+
+    if (preg_match('/^([\w\-\.]+\.[\w\-]+)((\?|#)?.*)$/', $filenameWithExtras, $filenameMatches)) {
+      // Normal filename in url
+      $filename = joinPath(dirname(__DIR__, 2), $subdir, $filenameMatches[1]);
+      return $filename;
+    } else {
+      // filenameWithExtras ends with directory, ex: test (coming from 'something.com/subdir')
+      if (preg_match('/^([^\/\?#]+).*$/', $filenameWithExtras, $filenameMatches)) {
+        $filename = joinPath(dirname(__DIR__, 2), $subdir, $filenameMatches[1], 'index.html');
+        return $filename;
+      }
+      return NULL;
+    }
+  }
+  return NULL;
+}
+
 ?>

@@ -5,7 +5,7 @@ session_start();
 require_once(dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . 'common.php');
 require_once(dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . 'config.php');
 require_once(__DIR__ . DIRECTORY_SEPARATOR . 'auth.php');
-require_once(join(DIRECTORY_SEPARATOR, array(dirname(__DIR__, 1), 'db', $DB_TYPE, 'user.php')));
+require_once(joinPath(dirname(__DIR__, 1), 'db', $DB_TYPE, 'user.php'));
 
 setCors();
 

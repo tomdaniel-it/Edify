@@ -17,6 +17,7 @@ function unauthenticate() {
 }
 
 function isAuthenticated() {
+  trigger_error($_SESSION['authenticated'], E_USER_WARNING);
   return isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === TRUE;
 }
 
