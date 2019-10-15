@@ -20,7 +20,8 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "react-hooks"
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
@@ -38,7 +39,10 @@
         "no-continue": "off",
         "lines-between-class-members": "off",
         "class-methods-use-this": "off" ,
-        "no-param-reassign": ["error", { "props": false }]
+        "no-param-reassign": ["error", { "props": false }],
+        "jsx-a11y/anchor-is-valid": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error"
     },
     "settings": {
         "import/resolver": {
