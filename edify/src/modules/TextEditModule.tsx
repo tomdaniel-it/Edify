@@ -8,7 +8,7 @@ export default class TextEditModule implements Module {
 
   constructor() {
     this.id = 'text-edit';
-    this.icon = '';
+    this.icon = 'text-edit.png';
     this.name = 'Text edit';
     this.description = 'Edit texts on the page.';
   }
@@ -18,6 +18,11 @@ export default class TextEditModule implements Module {
     if (langEl != null) {
       langEl.innerHTML = 'BE';
     }
+
+    return currentDom;
+  }
+
+  preview(originalDom: Document, currentDom: Document) {
     return currentDom;
   }
 
@@ -26,6 +31,7 @@ export default class TextEditModule implements Module {
     if (langEl != null) {
       langEl.innerHTML = 'NL';
     }
+
     return currentDom;
   }
 }

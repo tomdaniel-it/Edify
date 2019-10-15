@@ -5,5 +5,6 @@ export interface Module {
   description: string;
 
   activate: (originalDom: Document, currentDom: Document) => Document;
+  preview: (originalDom: Document, currentDom: Document) => Document;
   disable: (originalDom: Document, currentDom: Document) => Document;
 }
