@@ -22,7 +22,7 @@ const Touchable = ({ children, callback, tabIndex }: TouchableProps) => {
         callback();
       }
     },
-    [],
+    [callback],
   );
 
   return (

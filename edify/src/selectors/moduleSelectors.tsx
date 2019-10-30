@@ -7,3 +7,6 @@ export const getActiveModule = (state: ApplicationState) => state.modules.active
 
 export const isModuleActive = (module: Module) => (state: ApplicationState) =>
   state.modules.activeModule && state.modules.activeModule.id === module.id;
+
+export const getActiveModuleState = (state: ApplicationState) =>
+  state.modules.activeModule && state.modules.activeModule.state;

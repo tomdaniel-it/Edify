@@ -32,7 +32,8 @@
     "start:backend": "php -S 0.0.0.0:8000",
     "start:demo": "cd ../demo/ && php -S 0.0.0.0:8000",
     "build": "react-scripts build",
-    "build:demo": "npm run build && rm -rf ../demo/edify/* && cp -a build/. ../demo/edify/ && cp backend/ ../demo/edify/backend/ -r",
+    "build:demo": "npm run build && mkdir -p ../demo/edify/backend/db/json/db && mv ../demo/edify/backend/db/json/db/ ../demo/edify-tmp/ && rm -rf ../demo/edify/* && cp -a build/. ../demo/edify/ && cp backend/ ../demo/edify/backend/ -r && mkdir -p ../demo/edify/backend/db/json/ && rm ../demo/edify/backend/db/json/db -rf && mv ../demo/edify-tmp ../demo/edify/backend/db/json/db",
+    "build:demo:reset": "rm -rf ../demo/edify/backend/db/json/db/* && npm run build:demo",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .tsx"

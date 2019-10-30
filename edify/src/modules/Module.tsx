@@ -3,8 +3,9 @@ export interface Module {
   icon: string;
   name: string;
   description: string;
+  state: 'disabled'|'active'|'preview';
 
-  activate: (originalDom: Document, currentDom: Document) => Document;
-  preview: (originalDom: Document, currentDom: Document) => Document;
-  disable: (originalDom: Document, currentDom: Document) => Document;
+  activate: (originalDom: Document, currentDom: Document) => Promise<Document>;
+  preview: (originalDom: Document, currentDom: Document) => Promise<Document>;
+  disable: (originalDom: Document, currentDom: Document) => Promise<Document>;
 }

@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { useSelector } from 'react-redux';
 import ModuleIcon from './ModuleIcon';
 import { getModules } from '../../selectors/moduleSelectors';
 
+export const EDITOR_BAR_WIDTH = 70;
+
 const editorBarStyle = {
   backgroundColor: '#2C2C2C',
-  width: 70,
+  width: EDITOR_BAR_WIDTH,
 };
 
-const moduleIconContainerStyle: {
-  marginTop: number,
-  textAlign: 'center'
-} = {
+const moduleIconContainerStyle: CSSProperties = {
   marginTop: 80,
   textAlign: 'center',
 };

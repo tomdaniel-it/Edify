@@ -18,6 +18,22 @@ export const escapeHtml = (html: string) => html
   .replace(/"/g, '&quot;')
   .replace(/'/g, '&#039;');
 
+export const injectJavascriptIntoDocument
+  = async (doc: Document, src: string, generatedScriptId?: string | null) =>
+    new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = `edify/js-injections/${src.charAt(0) !== '/' ? src : src.substring(1)}`;
+      if (generatedScriptId != null) {
+        script.id = generatedScriptId;
+      }
+      script.async = false;
+      script.addEventListener('load', resolve);
+      script.addEventListener('error', () => reject(
+        new Error(`Could not inject javascript file into document: script load error. src: ${src}`),
+      ));
+      doc.head.appendChild(script);
+    });
+
 export const getElementByEID: (dom: HTMLElement, eid: string) => null | HTMLElement
   = (dom: HTMLElement, eid: string) => {
     if (getElementEdifyId(dom) === eid) return dom;
