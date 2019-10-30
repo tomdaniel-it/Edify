@@ -39,6 +39,7 @@ const ModuleActions = () => {
   const onPublishClick = useCallback(
     () => {
       alert('Not supported yet');
+      // TODO: Implement publish functionality
     },
     [],
   );

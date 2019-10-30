@@ -75,4 +75,9 @@ export default class TextEditModule implements Module {
 
     return currentDom;
   }
+
+  async prepareForPublish(originalDom: Document, currentDom: Document) {
+    // TODO: mark updated elements as updated for publish to be able to see what to update
+    return currentDom;
+  }
 }
