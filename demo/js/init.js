@@ -54,7 +54,7 @@
         setLang(getCookie("lang"));
     }
     function setLang(lang){
-        if(lang===null) lang = "";
+        if(lang == null || lang == '') lang = 'EN';
         if(lang === "EN"){
             $('lang-nl').css('display', 'none');
             $('lang-en').css('display', 'initial');
