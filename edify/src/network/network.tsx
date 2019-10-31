@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { isProduction } from '../util';
 
-const BACKEND_URL = isProduction() ? 'edify/backend' : 'http://localhost:8000/backend';
+const BACKEND_URL = isProduction() ? 'backend' : 'http://localhost:8000/backend';
 
 type Method = 'get' | 'post' | 'put' | 'delete';
 

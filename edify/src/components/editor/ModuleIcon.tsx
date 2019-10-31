@@ -39,7 +39,7 @@ const ModuleIcon = ({ module, index }: { module: Module, index: number }) => {
   return (
     <Touchable callback={onClick} tabIndex={index}>
       <img
-        src={`edify/images/module-icons/${module.icon}`}
+        src={`images/module-icons/${module.icon}`}
         alt={`Module ${module.name} icon`}
         style={isModuleActivated ? iconActiveStyle : iconStyle}
       />
