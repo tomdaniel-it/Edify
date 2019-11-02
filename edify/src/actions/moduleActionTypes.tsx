@@ -1,22 +1,17 @@
 import { Module } from '../modules/Module';
+import { ActiveModuleState } from '../reducers/moduleReducer';
 
-export const ACTIVATE_MODULE: 'ACTIVATE_MODULE' = 'ACTIVATE_MODULE';
-export const PREVIEW_MODULE: 'PREVIEW_MODULE' = 'PREVIEW_MODULE';
-export const DISABLE_MODULE: 'DISABLE_MODULE' = 'DISABLE_MODULE';
+export const SET_ACTIVE_MODULE: 'SET_ACTIVE_MODULE' = 'SET_ACTIVE_MODULE';
+export const SET_ACTIVE_MODULE_STATE: 'SET_ACTIVE_MODULE_STATE' = 'SET_ACTIVE_MODULE_STATE';
 
-export interface ActivateModule {
-  type: typeof ACTIVATE_MODULE,
+export interface SetActiveModule {
+  type: typeof SET_ACTIVE_MODULE,
   payload: Module,
 }
 
-export interface PreviewModule {
-  type: typeof PREVIEW_MODULE,
-  payload: Module,
+export interface SetActiveModuleState {
+  type: typeof SET_ACTIVE_MODULE_STATE,
+  payload: ActiveModuleState,
 }
 
-export interface DisableModule {
-  type: typeof DISABLE_MODULE,
-  payload: Module,
-}
-
-export type ModuleActions = ActivateModule | PreviewModule | DisableModule;
+export type ModuleActions = SetActiveModule | SetActiveModuleState;

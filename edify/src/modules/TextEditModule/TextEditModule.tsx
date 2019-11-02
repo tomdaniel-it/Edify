@@ -13,17 +13,15 @@ export default class TextEditModule implements Module {
   icon: string;
   name: string;
   description: string;
-  state: 'disabled'|'active'|'preview';
 
   constructor() {
     this.id = 'text-edit';
     this.icon = 'text-edit.png';
     this.name = 'Text edit';
     this.description = 'Edit texts on the page.';
-    this.state = 'disabled';
   }
 
-  async activate(originalDom: Document, currentDom: Document) {
+  async addModuleToDom(originalDom: Document, currentDom: Document) {
     const { head, body } = currentDom;
     body.classList.add('medium-editor-target');
 
@@ -49,7 +47,7 @@ export default class TextEditModule implements Module {
     return currentDom;
   }
 
-  async preview(originalDom: Document, currentDom: Document) {
+  async removeModuleFromDom(originalDom: Document, currentDom: Document) {
     try {
       await injectJavascriptIntoDocument(
         currentDom,
@@ -67,17 +65,6 @@ export default class TextEditModule implements Module {
     removeEl(document.getElementById(MEDIUM_EDITOR_SCRIPT_ACTIVATE_ID));
     removeEl(document.getElementById(MEDIUM_EDITOR_SCRIPT_DESTROY_ID));
 
-    return currentDom;
-  }
-
-  async disable(originalDom: Document, currentDom: Document) {
-    currentDom.location.reload();
-
-    return currentDom;
-  }
-
-  async prepareForPublish(originalDom: Document, currentDom: Document) {
-    // TODO: mark updated elements as updated for publish to be able to see what to update
     return currentDom;
   }
 }

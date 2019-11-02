@@ -1,12 +1,15 @@
 import { Module } from '../modules/Module';
 import TextEditModule from '../modules/TextEditModule/TextEditModule';
 import {
-  ACTIVATE_MODULE, ModuleActions, DISABLE_MODULE, PREVIEW_MODULE,
+  ModuleActions, SET_ACTIVE_MODULE, SET_ACTIVE_MODULE_STATE,
 } from '../actions/moduleActionTypes';
+
+export type ActiveModuleState = 'active'|'preview'|null;
 
 export interface ModuleState {
   modules: Array<Module>,
   activeModule: Module|null,
+  activeModuleState: ActiveModuleState,
 }
 
 const initialState: ModuleState = {
@@ -14,34 +17,21 @@ const initialState: ModuleState = {
     new TextEditModule(),
   ],
   activeModule: null,
+  activeModuleState: null,
 };
 
 
 const moduleReducer = (state = initialState, action: ModuleActions): ModuleState => {
   switch (action.type) {
-    case ACTIVATE_MODULE:
+    case SET_ACTIVE_MODULE:
       return ({
         ...state,
-        modules: state.modules.map(
-          (module) => (module.id !== action.payload.id ? module : action.payload),
-        ),
         activeModule: action.payload,
       });
-    case PREVIEW_MODULE:
+    case SET_ACTIVE_MODULE_STATE:
       return ({
         ...state,
-        modules: state.modules.map(
-          (module) => (module.id !== action.payload.id ? module : action.payload),
-        ),
-        activeModule: action.payload,
-      });
-    case DISABLE_MODULE:
-      return ({
-        ...state,
-        modules: state.modules.map(
-          (module) => (module.id !== action.payload.id ? module : action.payload),
-        ),
-        activeModule: null,
+        activeModuleState: action.payload,
       });
     default:
       return state;
