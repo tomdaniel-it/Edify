@@ -1,6 +1,6 @@
 import { handleWarning, handleError } from '../util';
 
-const NODE_TEXT_NAME = '#test';
+const NODE_TEXT_NAME = '#text';
 const SELF_CLOSING_ELEMENTS = [
   'area', 'base', 'br', 'embed', 'hr', 'iframe', 'img', 'input', 'link', 'meta',
   'param', 'source', 'track', 'col', 'command', 'keygen', 'menuitem',
@@ -9,7 +9,7 @@ const SELF_CLOSING_ELEMENTS = [
 export const getDOMFromString =
   (domAsString: string) => (new DOMParser()).parseFromString(domAsString, 'text/html');
 
-const getElementEdifyId = (element: HTMLElement) => element.dataset.eid;
+export const getElementEdifyId = (element: HTMLElement) => element.dataset.eid || null;
 
 export const escapeHtml = (html: string) => html
   .replace(/&/g, '&amp;')
@@ -60,16 +60,19 @@ export const markElementAsEdited: (element: HTMLElement) => void = (element: HTM
 // TODO: When preview, reload iframe (with new content), otherwise
 //       event listeners won't be added to new elements
 
-const isElementEdited: (element: HTMLElement) => boolean
+export const isElementEdited: (element: HTMLElement) => boolean
   = (element: HTMLElement) =>
     element.dataset.edifyEdited != null
     || (element.parentNode instanceof HTMLElement && isElementEdited(element.parentNode));
 
+const isElementAttributeEdited: (element: HTMLElement) => boolean
+  = (element: HTMLElement) => element.dataset.edifyAttributeEdited != null;
+
 // data-edify-ignore can be added by users to make elements be ignored by the cms
-export const shouldIgnoreElement: (element: HTMLElement, originalDOM: HTMLElement) => boolean
+export const shouldIgnoreElementWhenEditing:
+  (element: HTMLElement, originalDOM: HTMLElement) => boolean
   = (element: HTMLElement, originalDOM: HTMLElement) => {
-    // If element has been edited by a module, no eid will be present,
-    // yet it should not be ignored.
+    // If element has been edited by a module, it should not be ignored.
     if (isElementEdited(element)) {
       return false;
     }
@@ -80,36 +83,44 @@ export const shouldIgnoreElement: (element: HTMLElement, originalDOM: HTMLElemen
       return true;
     }
 
-    // See if text children are different
+    // See if text children are different:
+    // Return true if new child added, existing child removed or
+    // text child edited
     const originalElement = getElementByEID(originalDOM, eid);
-    if (originalElement == null) {
+    if (
+      originalElement == null
+      || originalElement.childNodes.length !== element.childNodes.length
+      || element.tagName !== originalElement.tagName
+    ) {
       return true;
     }
     for (let i = 0; i < element.childNodes.length; ++i) {
       const child = element.childNodes[i];
       const originalChild = originalElement.childNodes[i];
 
-      if (originalChild == null && child.nodeName === NODE_TEXT_NAME) {
+      const childIsText = child.nodeName === NODE_TEXT_NAME;
+      const origChildIsText = originalChild.nodeName === NODE_TEXT_NAME;
+
+      if (
+        ((childIsText && !origChildIsText) || (!childIsText && origChildIsText))
+          && (!(child instanceof HTMLElement) || !isElementEdited(child))) {
         return true;
       }
-      if (originalChild != null) {
-        const childIsText = child.nodeName === NODE_TEXT_NAME;
-        const origChildIsText = originalChild.nodeName === NODE_TEXT_NAME;
-
-        if (
-          ((childIsText && !origChildIsText) || (!childIsText && origChildIsText))
-          && (!(child instanceof HTMLElement) || !isElementEdited(child))) {
+      if (childIsText && origChildIsText) {
+        if (child.nodeValue !== originalChild.nodeValue) {
           return true;
         }
-        if (childIsText && origChildIsText && child.nodeValue !== originalChild.nodeValue) {
-          return true;
-        }
+      } else if (
+        (<HTMLElement><any>child).dataset.eid == null ||
+        (<HTMLElement><any>child).dataset.eid !== (<HTMLElement><any>originalChild).dataset.eid
+      ) {
+        return true;
       }
     }
 
     const { parentNode } = element;
     if (parentNode != null && parentNode instanceof HTMLElement) {
-      return shouldIgnoreElement(parentNode, originalDOM);
+      return shouldIgnoreElementWhenEditing(parentNode, originalDOM);
     }
     return false;
   };
@@ -299,6 +310,14 @@ const replaceHtmlContentById = (html: string, newContent: string, id: string) =>
 export const getPublishableHtml = (originalHtml: string, currentDom: Document) => {
   let updatedHtml = originalHtml;
 
+  // Remove elements which have been deleted in currentDom
+  // TODO: Already handled by replaceChildrenIfTagged but would be more efficient and
+  //       less prone to unexpected behaviour by not rewriting neighbour elements
+
+  // Add elements which have been added in currentDom
+  // TODO: Same as removing elements
+
+  // Edit content of children who have the data-edify-edited attribute
   const replaceChildrenIfTagged = (element: HTMLElement | Document) => {
     element.childNodes.forEach((el) => {
       if (!(el instanceof HTMLElement)) {
@@ -312,6 +331,5 @@ export const getPublishableHtml = (originalHtml: string, currentDom: Document) =
       }
     });
   };
-
   replaceChildrenIfTagged(currentDom);
 };
